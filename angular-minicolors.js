@@ -72,7 +72,7 @@
          * @param color
          */
         function setMinicolorsValue(color) {
-          if (isValidColor(color) && canSetValue()) {
+          if ((color === null || isValidColor(color)) && canSetValue()) {
             element.minicolors('value', color);
           }
         }
