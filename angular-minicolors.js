@@ -1,7 +1,7 @@
 'format cjs';
 'use strict';
 
-(function(root, factory) {
+(function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     define(['angular', 'jquery-minicolors'], factory);
   } else if (typeof exports === 'object') {
@@ -10,11 +10,11 @@
   } else {
     root.angularMinicolors = factory(root.angular, root.jqueryMinicolors);
   }
-})(this, function(angular) {
+})(this, function (angular) {
 
   angular.module('minicolors', []);
 
-  angular.module('minicolors').provider('minicolors', function() {
+  angular.module('minicolors').provider('minicolors', function () {
     this.defaults = {
       theme: 'bootstrap',
       position: 'top left',
@@ -33,23 +33,23 @@
       showSpeed: 100
     };
 
-    this.$get = function() {
+    this.$get = function () {
       return this;
     };
 
   });
 
-  angular.module('minicolors').directive('minicolors', ['minicolors', '$timeout', function(minicolors, $timeout) {
+  angular.module('minicolors').directive('minicolors', ['minicolors', '$timeout', function (minicolors, $timeout) {
     return {
       require: '?ngModel',
       restrict: 'A',
       priority: 1, //since we bind on an input element, we have to set a higher priority than angular-default input
-      link: function(scope, element, attrs, ngModel) {
+      link: function (scope, element, attrs, ngModel) {
 
         var inititalized = false;
 
         //gets the settings object
-        var getSettings = function() {
+        var getSettings = function () {
           var config = angular.extend({}, minicolors.defaults, scope.$eval(attrs.minicolors));
           return config;
         };
@@ -67,36 +67,45 @@
           return (element.data('minicolors-settings') != null)
         }
 
+        function isEmpty(value) {
+          return value === null || value === undefined || String(value).trim() === '';
+        }
+
         /**
          * set color value as minicolors internal color value
          * @param color
          */
         function setMinicolorsValue(color) {
-          if ((color === null || isValidColor(color)) && canSetValue()) {
+
+          if (!canSetValue()) return;
+
+          if (isEmpty(color)) {
+            element.minicolors('value', null);
+          } else if (isValidColor(color)) {
             element.minicolors('value', color);
           }
         }
 
         //what to do if the value changed
-        ngModel.$render = function() {
+        ngModel.$render = function () {
 
 
           //we are in digest or apply, and therefore call a timeout function
-          $timeout(function() {
+          $timeout(function () {
             var color = ngModel.$viewValue;
             setMinicolorsValue(color);
           }, 0, false);
         };
 
         //init method
-        var initMinicolors = function() {
+        var initMinicolors = function () {
 
           if (!ngModel) {
             return;
           }
           var settings = getSettings();
-          settings.change = function(hex) {
-            scope.$apply(function() {
+          settings.change = function (hex) {
+            scope.$apply(function () {
               if (isValidColor(hex))
                 ngModel.$setViewValue(hex);
             });
@@ -118,7 +127,7 @@
           //needs to be wrapped in $timeout, to prevent $apply / $digest errors
           //$scope.$apply will be called by $timeout, so we don't have to handle that case
           if (!inititalized) {
-            $timeout(function() {
+            $timeout(function () {
               var color = ngModel.$viewValue;
               setMinicolorsValue(color);
             }, 0);
@@ -127,11 +136,11 @@
           }
 
           function onBlur(e) {
-            scope.$apply(function() {
-                var color = element.minicolors('value');
-                if (isValidColor(color))
-                  ngModel.$setViewValue(color);
-            });              
+            scope.$apply(function () {
+              var color = element.minicolors('value');
+              if (isValidColor(color))
+                ngModel.$setViewValue(color);
+            });
           }
         };
 
@@ -143,8 +152,8 @@
 
         scope.$on('$destroy', function () {
           if (element.hasClass('minicolors-input')) {
-              element.minicolors('destroy');
-              element.remove();
+            element.minicolors('destroy');
+            element.remove();
           }
           if (unbindWatch) unbindWatch();
         });
