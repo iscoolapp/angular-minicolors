@@ -1,14 +1,14 @@
 {
   "name": "angular-minicolors",
-  "version": "0.0.13",
-  "description": "A wrapper around JQuery MiniColors by Cory LaViska",
+  "version": "0.1.0",
+  "description": "Forked from https://github.com/kaihenzler/angular-minicolors",
   "main": "angular-minicolors.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kaihenzler/angular-minicolors.git"
+    "url": "git+https://github.com/iscoolapp/angular-minicolors.git"
   },
   "keywords": [
     "angular",
@@ -18,14 +18,16 @@
     "color",
     "picker"
   ],
-  "author": "Kai Henzler <kai.henzler@gmx.de>",
+  "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kaihenzler/angular-minicolors/issues"
+    "url": "https://github.com/iscoolapp/angular-minicolors/issues"
   },
-  "homepage": "https://github.com/kaihenzler/angular-minicolors#readme",
+  "homepage": "https://github.com/iscoolapp/angular-minicolors#readme",
+  "dependencies": {
+    "@claviska/jquery-minicolors": "^2.3.4"
+  },
   "peerDependencies": {
-    "jquery-minicolors": "^2.1.10",
     "angular": "^1.4.0"
   }
 }
