@@ -117,15 +117,15 @@
 
         function sanitizeColor(color) {
 
-          console.log('color -> ' + color);
+          // console.log('color -> ' + color);
 
           if (isEmpty(color) || !isValidColor(color)) {
-            console.log('invalid color -> ' + color);
+            // console.log('invalid color -> ' + color);
             return null;
           }
 
           color = fixCase(color);
-          console.log('sanitizedColor -> ' + color);
+          // console.log('sanitizedColor -> ' + color);
           return color;
         }
 
@@ -150,7 +150,7 @@
           const settings = getSettings();
           settings.change = function (color, opacity) {
             scope.$apply(function () {
-              console.log('change -> ' + color);
+              // console.log('change -> ' + color);
               ngModel.$setViewValue(sanitizeColor(color));
             });
           };
@@ -182,7 +182,7 @@
           function onBlur(e) {
             scope.$apply(function () {
               const color = sanitizeColor(element.minicolors('value'));
-              console.log('blur -> ' + color);
+              // console.log('blur -> ' + color);
               ngModel.$setViewValue(color);
               setMinicolorsValue(color);
             });
