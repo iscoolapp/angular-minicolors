@@ -73,7 +73,7 @@
         }
 
         function isValidColor(color) {
-          return isHEX(color) || isRGB(color);
+          return isHEX(color, true) || isRGB(color);
         }
 
         function canSetValue() {
@@ -108,7 +108,7 @@
 
           if (!canSetValue()) return;
 
-          if (isHEX(color)) {
+          if (isHEX(color, true)) {
             element.minicolors('value', {color: sanitizeColor(color), opacity: 1});
           } else {
             element.minicolors('value', sanitizeColor(color));
